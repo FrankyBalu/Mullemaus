@@ -1,5 +1,5 @@
 /*
- * Kleinod
+ * Mullemaus
  * Copyright (C) 2023   Frank Kartheuser <frank.kartheuser1988@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
@@ -16,27 +16,23 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-#include "raylib.h"
-#include <mullemaus/core/log.hpp>
-#include <mullemaus/core/mullemaus.hpp>
-#include <mullemaus/core/OverlayText_raylib.hpp>
-#include <mullemaus/core/gamepad.hpp>
-#include <mullemaus/core/keyboard.hpp>
 
+#include "overlaytextmanager.hpp"
+#include "basicobject.hpp"
 
-//Erstmal nur zum testen
+MM::TextOverlayManager::TextOverlayManager() : pObjects(), pCounter(0) {
+}
 
-int main(int argc, char* argv[]) {
+int MM::TextOverlayManager::AddObject(MM::BasicObject *obj) {
+    pObjects[pCounter] = obj;
+    pCounter++;
+    return pCounter;
+}
 
+int MM::TextOverlayManager::GetNumObjects() {
+    return pCounter;
+}
 
-    MM::Mullemaus::Instance()->Initialize("Mullemaus Demo: Kleinod", argc, argv);
-
-    while (MM::Mullemaus::Instance()->IsRunning()) {
-        MM::Mullemaus::Instance()->HandleEvents();
-        MM::Mullemaus::Instance()->Update();
-        MM::Mullemaus::Instance()->Render();
-    }
-    MM::Mullemaus::Instance()->Clean();
-
-    return 0;
+MM::BasicObject *MM::TextOverlayManager::GetObject(int id) {
+    return pObjects[id];
 }

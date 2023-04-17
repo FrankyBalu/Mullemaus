@@ -5,13 +5,21 @@ SET(MULLEMAUS_CORE
         core/log.cpp
         core/log.hpp
         core/mullemaus.hpp
-        core/mullemaus.cpp
-        core/MullemausOverlay.cpp
-        core/MullemausOverlay.hpp
-        core/gamepad.cpp
+        core/mullemaus_raylib.cpp
+        core/overlaytext_raylib.cpp
+        core/overlaytext.hpp
+        core/gamepad_raylib.cpp
         core/gamepad.hpp
-        core/keyboard.cpp
+        core/keyboard_raylib.cpp
         core/keyboard.hpp
+        core/basicobject.hpp
+        core/rect2d.cpp
+        core/rect2d.hpp
+        core/overlaytextmanager.cpp
+        core/overlaytextmanager.hpp
+        core/objectfactory.cpp
+        core/objectfactory.hpp
+
         )
 
 if (UNIX)

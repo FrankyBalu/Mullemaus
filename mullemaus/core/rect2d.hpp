@@ -17,52 +17,45 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#ifndef MULLEMAUSOVERLAY_H
-#define MULLEMAUSOVERLAY_H
+#ifndef MULLEMAUS_RECT2D_HPP
+#define MULLEMAUS_RECT2D_HPP
 
-#include <string>
-#include <map>
 #include "mullemaus_api.hpp"
-#include <raylib.h>
+
+typedef struct Rectangle Rectangle;
 
 namespace MM {
 
     extern "C" {
-
-    MULLEMAUS_API class MullemausOverlay {
+    MULLEMAUS_API class Rect2D {
     public:
-        MullemausOverlay();
+        Rect2D();
+        Rect2D(float x, float y, float width, float height);
 
-        void AddText(const std::string msg);
+        void SetX(float x);
+        float GetX();
 
-        void RemoveText(long unsigned int line);
+        void SetY(float y);
+        float GetY();
 
-        void SetTextColor(Color color);
+        void SetWidth(float width);
+        float GetWidth();
 
-        void SetTextSize(int size);
+        void SetHeight(float height);
+        float GetHeight();
 
         void SetPos(float x, float y);
+        void SetSize(float width, float height);
 
-        void Render();
-
-        void Update();
-
-        void Clean();
+        Rectangle* GetRectangle ();
 
     private:
-
-        std::map<int, std::string> pMsg;
-        int pNumLines;
-        float pTextSize;
-
-        float pPosX;
-        float pPosY;
-
-        Color pTextColor;
-
-        std::string pName;
+        float pX;
+        float pY;
+        float pWidth;
+        float pHeight;
     };
-    };
+    }
 } // MM
 
-#endif //MULLEMAUSOVERLAY_H
+#endif //MULLEMAUS_RECT2D_HPP

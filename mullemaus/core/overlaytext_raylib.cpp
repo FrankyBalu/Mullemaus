@@ -17,16 +17,19 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include "MullemausOverlay.hpp"
+#include "overlaytext.hpp"
+#include "basicobject.hpp"
 #include "mullemaus.hpp"
 #include "log.hpp"
-#include "raylib.h"
+#include <raylib.h>
 #include <sstream>
 
 
-MM::MullemausOverlay::MullemausOverlay()
-        : pMsg(), pNumLines(0), pTextSize(MM::Mullemaus::Instance()->GetDefaultFontSize()), pPosX(0), pPosY(0),
-          pTextColor(BLACK) {
+MM::OverlayText::OverlayText(std::string name)
+        : BasicObject("Graphic", "Overlay", name), pMsg(), pNumLines(0), pTextSize(MM::Mullemaus::Instance()->GetDefaultFontSize()), pPosX(0), pPosY(0),
+          pTextColor() {
+    pTextColor = new Color;
+    (*pTextColor) = BLACK;
     pPosY += MM::Mullemaus::Instance()->GetDefaultFontSize();
     pName = "Overlay_";
     pName += std::to_string(GetRandomValue(1, 32767));
@@ -34,7 +37,7 @@ MM::MullemausOverlay::MullemausOverlay()
 }
 
 
-void MM::MullemausOverlay::AddText(const std::string msg) {
+void MM::OverlayText::AddText(const std::string msg) {
     auto ss = std::stringstream{msg};
 
     for (std::string line; std::getline(ss, line, '\n');) {
@@ -43,7 +46,7 @@ void MM::MullemausOverlay::AddText(const std::string msg) {
     }
 }
 
-void MM::MullemausOverlay::RemoveText(long unsigned int line) {
+void MM::OverlayText::RemoveText(long unsigned int line) {
     line--;
     if (line > pMsg.size()) {
         LOG_ERROR("Line {} do not exist!", line);
@@ -54,17 +57,17 @@ void MM::MullemausOverlay::RemoveText(long unsigned int line) {
         pMsg.erase(iter);
 }
 
-void MM::MullemausOverlay::SetTextSize(int size) {
+void MM::OverlayText::SetTextSize(int size) {
     LOG_DEBUG("Overlay {} set text size to {}", pName, size);
     pTextSize = size;
 }
 
-void MM::MullemausOverlay::SetTextColor(Color color) {
+void MM::OverlayText::SetTextColor(Color color) {
     LOG_DEBUG("Overlay {} set text size to R:{} G:{} B{}", pName, color.r, color.g, color.b);
-    pTextColor = color;
+    (*pTextColor) = color;
 }
 
-void MM::MullemausOverlay::Render() {
+void MM::OverlayText::Render() {
     if (!IsFontReady((*Mullemaus::Instance()->GetDefaultFont()))) {
         LOG_ERROR("Default font isn't load");
     }
@@ -72,16 +75,16 @@ void MM::MullemausOverlay::Render() {
     for (auto const &[key, val]: pMsg) {
         DrawTextEx((*Mullemaus::Instance()->GetDefaultFont()), val.c_str(),
                    Vector2{pPosX, pPosY + (pTextSize * (count))}, pTextSize,
-                   1, pTextColor);
+                   1, (*pTextColor));
         count++;
     }
 }
 
-void MM::MullemausOverlay::Update() {
+void MM::OverlayText::Update() {
 
 }
 
-void MM::MullemausOverlay::Clean() {
+void MM::OverlayText::Clean() {
     LOG_DEBUG("Clean Overlay {}", pName);
     pMsg.clear();
     pNumLines = 0;
@@ -89,7 +92,7 @@ void MM::MullemausOverlay::Clean() {
     pName.clear();
 }
 
-void MM::MullemausOverlay::SetPos(float x, float y) {
+void MM::OverlayText::SetPos(float x, float y) {
     pPosY = y;
     pPosX = x;
 }

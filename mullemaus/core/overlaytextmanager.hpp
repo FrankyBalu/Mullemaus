@@ -1,5 +1,5 @@
 /*
- * Kleinod
+ * Mullemaus
  * Copyright (C) 2023   Frank Kartheuser <frank.kartheuser1988@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
@@ -16,27 +16,39 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-#include "raylib.h"
-#include <mullemaus/core/log.hpp>
-#include <mullemaus/core/mullemaus.hpp>
-#include <mullemaus/core/OverlayText_raylib.hpp>
-#include <mullemaus/core/gamepad.hpp>
-#include <mullemaus/core/keyboard.hpp>
+
+#ifndef MULLEMAUS_OVERLAYTEXTMANAGER_HPP
+#define MULLEMAUS_OVERLAYTEXTMANAGER_HPP
+
+#include "mullemaus_api.hpp"
+#include "basicobject.hpp"
+#include <map>
+
+namespace MM {
+
+    extern "C" {
+
+    MULLEMAUS_API class TextOverlayManager {
+    public:
+        TextOverlayManager();
 
 
-//Erstmal nur zum testen
+        int AddObject(BasicObject *obj);
 
-int main(int argc, char* argv[]) {
+        //bool RemoveObject(int id);
+        BasicObject *GetObject(int id);
+
+        int GetNumObjects();
+
+    private:
+        std::map<int, BasicObject *> pObjects;
+
+        int pCounter;
+    };
+
+    }//extern "C"
+
+} // MM
 
 
-    MM::Mullemaus::Instance()->Initialize("Mullemaus Demo: Kleinod", argc, argv);
-
-    while (MM::Mullemaus::Instance()->IsRunning()) {
-        MM::Mullemaus::Instance()->HandleEvents();
-        MM::Mullemaus::Instance()->Update();
-        MM::Mullemaus::Instance()->Render();
-    }
-    MM::Mullemaus::Instance()->Clean();
-
-    return 0;
-}
+#endif //MULLEMAUS_OVERLAYTEXTMANAGER_HPP
