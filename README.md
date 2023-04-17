@@ -35,6 +35,7 @@ sudo make install
 ## Windows
 
 Es sollte mit jeder IDE gehen, die CMake unterstützt.
+![ ](data/Logo.png)
 
 # Roadmap
 
