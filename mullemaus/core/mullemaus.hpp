@@ -21,7 +21,9 @@
 #define MULLEMAUS_APP_HPP
 
 #include "mullemaus_common.hpp"
-#include "mullemausOverlay.hpp"
+#include "basicobject.hpp"
+#include "overlaytext.hpp"
+#include "overlaytextmanager.hpp"
 #include "mullemaus_api.hpp"
 
 #include <string>
@@ -148,10 +150,9 @@ namespace MM {
 
 
 
-        //spielerein zum testen
+        //zum Testen
 
-        void changeOverlay(MullemausOverlay *overlay);
-
+        void AddTextOverlay(BasicObject *overlay);
     private:
         static Mullemaus *pInstance;
 
@@ -165,7 +166,7 @@ namespace MM {
         Font *pDefaultfont;
         int pFontSize;
 
-        MullemausOverlay *pOverlay;
+        OverlayText *pOverlay;
 
         int pWindowWidth;
         int pWindowHeight;
@@ -177,7 +178,7 @@ namespace MM {
         bool InitAudio();
         bool InitInput();
 
-
+        TextOverlayManager pOverlayManager;
     };
     } //extern "C"
 }//namespace MM

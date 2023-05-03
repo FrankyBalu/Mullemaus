@@ -19,7 +19,7 @@
 #include "raylib.h"
 #include <mullemaus/core/log.hpp>
 #include <mullemaus/core/mullemaus.hpp>
-#include <mullemaus/core/mullemausOverlay.hpp>
+#include <mullemaus/core/overlaytext.hpp>
 #include <mullemaus/core/gamepad.hpp>
 #include <mullemaus/core/keyboard.hpp>
 
@@ -36,40 +36,46 @@ int main(int argc, char* argv[]) {
 
     MM::Gamepad gamepad(0);
     MM::Keyboard keyboard;
-    MM::MullemausOverlay overlay;
+    MM::OverlayText overlay("Test");
+    LOG_FATAL("overlay.name: {}", overlay.GetName());
+    LOG_FATAL("overlay.class: {}", overlay.GetClass());
+    LOG_FATAL("overlay.type: {}", overlay.GetType());
+    LOG_FATAL("overlay.id: {}", overlay.GetID());
+
+
     overlay.AddText("Overlay test");
     overlay.SetTextColor(RED);
     overlay.SetTextSize(30);
-    MM::Mullemaus::Instance()->changeOverlay(&overlay);
+    MM::Mullemaus::Instance()->AddTextOverlay(&overlay);
 
     while (MM::Mullemaus::Instance()->IsRunning()) {
         MM::Mullemaus::Instance()->HandleEvents();
         MM::Mullemaus::Instance()->Update();
-        if (keyboard.KeyPressed(MM::KEY::ONE) ||
-                gamepad.ButtonPressed(MM::GAMEPAD_BUTTON::RIGHT_FACE_DOWN)) {
-            MM::Mullemaus::Instance()->changeOverlay(&overlay);
-        }
         if (keyboard.KeyPressed(MM::KEY::F) ||
             gamepad.ButtonPressed(MM::GAMEPAD_BUTTON::RIGHT_FACE_LEFT)) {
             fs = !fs;
             MM::Mullemaus::Instance()->SetFullscreen(fs);
         }
-        if (gamepad.AxisMovement(MM::GAMEPAD_AXIS::LEFT_X) < -0.01) {
+        if (keyboard.KeyPressed(MM::KEY::LEFT) ||
+        gamepad.AxisMovement(MM::GAMEPAD_AXIS::LEFT_X) < -0.01) {
             if (posX > 0)
                 posX = posX - 10;
             overlay.SetPos(posX, posY);
         }
-        if (gamepad.AxisMovement(MM::GAMEPAD_AXIS::LEFT_X) > 0.01) {
+        if (keyboard.KeyPressed(MM::KEY::RIGHT) ||
+        gamepad.AxisMovement(MM::GAMEPAD_AXIS::LEFT_X) > 0.01) {
             if (posX < 700)
                 posX = posX + 10;
             overlay.SetPos(posX, posY);
         }
-        if (gamepad.AxisMovement(MM::GAMEPAD_AXIS::LEFT_Y) < -0.01) {
+        if (keyboard.KeyPressed(MM::KEY::UP) ||
+        gamepad.AxisMovement(MM::GAMEPAD_AXIS::LEFT_Y) < -0.01) {
             if (posY > 0)
                 posY = posY - 10;
             overlay.SetPos(posX, posY);
         }
-        if (gamepad.AxisMovement(MM::GAMEPAD_AXIS::LEFT_Y) > 0.01) {
+        if (keyboard.KeyPressed(MM::KEY::DOWN) ||
+        gamepad.AxisMovement(MM::GAMEPAD_AXIS::LEFT_Y) > 0.01) {
             if (posY < 500)
                 posY = posY + 10;
             overlay.SetPos(posX, posY);

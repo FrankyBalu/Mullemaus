@@ -35,6 +35,7 @@ sudo make install
 ## Windows
 
 Es sollte mit jeder IDE gehen, die CMake unterstützt.
+![ ](data/Logo.png)
 
 # Roadmap
 
@@ -43,8 +44,8 @@ Es sollte mit jeder IDE gehen, die CMake unterstützt.
 - [X] [Logging Klasse]
 - [X] [Fenstererstellen]
 - [X] [Schrift im Fenster darstellen]
-- [ ] [Eingabe möglichkeiten]
-- [ ] [Engine Objekte, um jeden Teil der Engine verfolgen zu können]
+- [X] [Eingabe möglichkeiten]
+- [X] [Engine Objekte, um jeden Teil der Engine verfolgen zu können]
 
 ## Version 0.0.2
 

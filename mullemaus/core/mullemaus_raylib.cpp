@@ -21,6 +21,7 @@
 #include "mullemaus.hpp"
 #include "log.hpp"
 #include "keyboard.hpp"
+#include "basicobject.hpp"
 #include <mullemaus_version.h>
 #include <globalConfig.hpp>
 #include <lyra/lyra.hpp>
@@ -36,6 +37,7 @@
 #define DEFAULT_WINDOW_WIDTH 800
 #define DEFAULT_WINDOW_HEIGHT 600
 
+long unsigned int  MM::BasicObject::pIDCount = 0;
 
 MM::Mullemaus *MM::Mullemaus::pInstance = nullptr;
 
@@ -131,8 +133,10 @@ void MM::Mullemaus::Render() {
     BeginDrawing();
     ClearBackground(Color{255, 255, 255, 255});
 
-    if (pOverlay != nullptr) {
-        pOverlay->Render();
+    if (pOverlayManager.GetNumObjects() > 0) {
+        for (int i = 0; i < pOverlayManager.GetNumObjects(); i++){
+            pOverlayManager.GetObject(i)->Render();
+        }
     }
 
     EndDrawing();
@@ -246,8 +250,8 @@ void MM::Mullemaus::Clean() {
 
 //spielerein zum testen
 
-void MM::Mullemaus::changeOverlay(MM::MullemausOverlay *overlay) {
-    pOverlay = overlay;
+void MM::Mullemaus::AddTextOverlay(MM::BasicObject *overlay) {
+    pOverlayManager.AddObject(overlay);
 }
 
 
