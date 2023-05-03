@@ -1,18 +1,18 @@
-﻿# Mullemaus
+﻿# MM
 
 Framework bzw. Engine zum erstellen von 2d Spielen in c++.
 
 ### Erik
 
-Jump and Run das als Demo für Mullemaus dient.
+Jump and Run das als Demo für MM dient.
 
 ### Kleinod
 
-RPG Demo für Mullemaus.
+RPG Demo für MM.
 
 ## Übersicht
 
-Mullemaus dient als Lernprojekt zum erstellen eines 2D-Spiels und der dazugehörenden Engine.
+MM dient als Lernprojekt zum erstellen eines 2D-Spiels und der dazugehörenden Engine.
 Es soll möglichst einfach ein Spiel, mit wenig C++ und etwas lua entwickelt werden können.
 
 # Bauanleitung
@@ -79,5 +79,5 @@ Es sollte mit jeder IDE gehen, die CMake unterstützt.
 
 ## Version 1.0.0
 
-- [ ] [Mullemaus wird zu einem eigenständigen Projekt, ohne Erik]
+- [ ] [MM wird zu einem eigenständigen Projekt, ohne Erik]
 - [ ] [Editor zum erstellen von Level]

@@ -1,5 +1,5 @@
 /*
- * Mullemaus
+ * MM
  * Copyright (C) 2023   Frank Kartheuser <frank.kartheuser1988@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
@@ -20,7 +20,7 @@
 #include "gamepad.hpp"
 #include <raylib.h>
 
-MM::Gamepad::Gamepad(int pad) :pPadNumber(pad){}
+MM::Gamepad::Gamepad(int pad) : pPadNumber(pad){}
 
 bool MM::Gamepad::ButtonPressed(MM::GAMEPAD_BUTTON button) {
     return IsGamepadButtonPressed(pPadNumber, static_cast<int>(button));

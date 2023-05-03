@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.24)
 
 project(Mullemaus VERSION 0.0.0
-        DESCRIPTION "Mullemaus dient als Framework bzw Engine für 2D Spiele. Erik ist eine Jump amd Run Demo uns Kleinod ist eine RPG Demo."
+        DESCRIPTION "Mullemaus ein Framework für 2D Spiele. Erik ist eine Jump amd Run Demo uns Kleinod ist eine RPG Demo."
         LANGUAGES CXX)
 
 #C++ Standart auf c++23
@@ -79,41 +79,39 @@ add_feature_info("Doxygen" Doxygen_FOUND "Generate API doc mir make doc")
 
 if (UNIX)
     find_package(Lua 5.4 REQUIRED)
-    find_package(spdlog 1.11 REQUIRED)
+    if (NOT Lua_FOUND)
+        message("lua nicht gefunden")
+    	add_subdirectory(extra/lua)
+    endif()
+    find_package(spdlog REQUIRED)
+    if (NOT spdlog_FOUND)
+    	add_subdirectory(extra/spdlog)
+    endif()
     find_package(fmt 9.1 REQUIRED)
-    find_package(tinyxml2 9.0 REQUIRED)
+
+    find_package(tinyxml2 REQUIRED)
 
     #Sollte unter Linux immer vorhanden sein, glaub ich zumindest
     find_package(ZLIB 1.2 REQUIRED)
-    find_package(PhysFS 3.2 REQUIRED)
+    if (NOT zlib_FOUND)
+    	add_subdirectory(extra/zlib)
+    endif()
+    find_package(PhysFS REQUIRED)
+    if (NOT PhysFS_FOUND)
+    	add_subdirectory(extra/physfs)
+    endif()
 
-    set(RAYLIB_VERSION 4.2.0)
-    find_package(raylib ${RAYLIB_VERSION} QUIET) # QUIET or REQUIRED
-    if (NOT raylib_FOUND) # If there's none, fetch and build raylib
-        include(FetchContent)
-        FetchContent_Declare(
-                raylib
-                URL https://github.com/raysan5/raylib/archive/refs/heads/master.zip
-        )
-        FetchContent_GetProperties(raylib)
-        if (NOT raylib_POPULATED) # Have we downloaded raylib yet?
-            set(FETCHCONTENT_QUIET NO)
-            FetchContent_Populate(raylib)
-            set(BUILD_EXAMPLES OFF CACHE BOOL " " FORCE) # don't build the supplied examples
-            set(BUILD_SHARED_LIBS OFF)
-            set(USE_EXTERNAL_GLFW ON)
-            set(CMAKE_BUILD_TYPE Release)
-            set(WITH_PIC TRUE)
-            add_subdirectory(${raylib_SOURCE_DIR} ${raylib_BINARY_DIR} EXCLUDE_FROM_ALL)
-        endif ()
-        include_directories(" ${raylib_SOURCE_DIR}/src")
-    endif ()
+    find_package(raylib REQUIRED)
+    if (NOT raylib_FOUND)
+    	add_subdirectory(extra/raylib)
+    endif()
 
-    add_feature_info("System lua" LUA_FOUND "")
+
+    add_feature_info("System lua" Lua_FOUND "")
     add_feature_info("System zlib" ZLIB_FOUND "")
-    add_feature_info("System tinyxml2" TINYXML2_FOUND "")
-    add_feature_info("System spdlog" SPDLOG_FOUND "")
-    add_feature_info("System fmt" FMT_FOUND "")
+    add_feature_info("System tinyxml2" tinyxml2_FOUND "")
+    add_feature_info("System spdlog" spdlog_FOUND "")
+    add_feature_info("System fmt" fmt_FOUND "")
 endif ()
 
 ########################################################################################################################
@@ -127,8 +125,11 @@ if (UNIX)
             "${PROJECT_SOURCE_DIR}"
             "${CMAKE_SYSTEM_INCLUDE_PATH}"
             "${PROJECT_SOURCE_DIR}/mullemaus/core/"
+            "${PROJECT_SOURCE_DIR}/extra/lyra/include"
             "${PROJECT_SOURCE_DIR}/extra/"
-
+            "${PROJECT_SOURCE_DIR}/extra/"
+            "${PROJECT_SOURCE_DIR}/extra/"
+            "${PROJECT_SOURCE_DIR}/extra/"
             "${PROJECT_SOURCE_DIR}/extra/sol"
             "${LUA_INCLUDE_DIR}"
     )

@@ -19,7 +19,7 @@
 #include "raylib.h"
 #include <mullemaus/core/log.hpp>
 #include <mullemaus/core/mullemaus.hpp>
-#include <mullemaus/core/MullemausOverlay.hpp>
+#include <mullemaus/core/mullemausOverlay.hpp>
 #include <mullemaus/core/gamepad.hpp>
 #include <mullemaus/core/keyboard.hpp>
 
@@ -32,7 +32,7 @@ int main(int argc, char* argv[]) {
     int posY = 0;
 
 
-    MM::Mullemaus::Instance()->Initialize("Mullemaus Demo: Erik", argc, argv);
+    MM::Mullemaus::Instance()->Initialize("MM Demo: Erik", argc, argv);
 
     MM::Gamepad gamepad(0);
     MM::Keyboard keyboard;

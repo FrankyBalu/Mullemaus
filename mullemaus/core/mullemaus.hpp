@@ -1,5 +1,5 @@
 /*
- * Mullemaus
+ * MM
  * Copyright (C) 2023   Frank Kartheuser <frank.kartheuser1988@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
@@ -20,7 +20,8 @@
 #ifndef MULLEMAUS_APP_HPP
 #define MULLEMAUS_APP_HPP
 
-#include "MullemausOverlay.hpp"
+#include "mullemaus_common.hpp"
+#include "mullemausOverlay.hpp"
 #include "mullemaus_api.hpp"
 
 #include <string>
@@ -36,17 +37,17 @@ namespace MM {
         //! Gibt einen Zeiger auf eine Klassen Instance
         static Mullemaus *Instance();
 
-        //! Initialisiert das Object der Klasse Mullemaus
+        //! Initialisiert das Object der Klasse MM
         /*!
          * Hier werden alle Einstellungen geladen und das Fenster erstellt, in dem gerendert wird.
-         * Desweiteren werden alle GameStates und GameObjekte, die fest zu Mullemaus gehören geladen.
-         * Alle zu ladenden Dateien gehören in das Systemverzeichniss, das Mullemaus vorgibt (meist /usr/share/{Anwendungsname}
+         * Desweiteren werden alle GameStates und GameObjekte, die fest zu MM gehören geladen.
+         * Alle zu ladenden Dateien gehören in das Systemverzeichniss, das MM vorgibt (meist /usr/share/{Anwendungsname}
          * @param appName Name der Anwendung, wichtig für das laden von Dateien.
          * @return false, wenn irgendwas nicht geklappt hat
          */
         bool Initialize(const std::string &appName, int argc, char* argv[]);
 
-        //! Ist Mullemaus initialisiert?
+        //! Ist MM initialisiert?
         /*!
          * Einige Funktionen sind darauf angewissen, das der OpenGl context geladen ist bzw die Einstellungen \n
          * diese können das hiermit überprüfen.
@@ -55,6 +56,10 @@ namespace MM {
          */
         bool IsReady();
 
+        //! Läuft die Haupptschleife von MM
+        /*!
+         * @return true, wenn die @sa RUN() läuft
+         */
         bool IsRunning();
 
         //! Sorgt dafür das die Renderfunktion des aktuellen States aufgerufen wird
@@ -64,7 +69,10 @@ namespace MM {
          */
         void Render();
 
+        //! Löscht den Bildschirm auf die Festgelegte Hintergrundfarbe
+        //TODO Hintergrundfarbe Benutzer definieren lassen
         void RenderClear();
+
         //! Update der Logik
         /*!
          * Die Updatefunktion des aktuellen States wird aufgerufen.
@@ -80,17 +88,21 @@ namespace MM {
         void HandleEvents();
 
         //! Auflösung wurde geändert
+        /*!
+         * Diese Funktion sorgt dafür das alle States, nicht nur der Aktive, über die neue Auflösung informiert werden.
+         */
         void Resize();
 
-        //! Beendet das Spiel
+        //! Räumt den allokierten Speicher auf
         /*!
-         * Diese Funktion Räumt den Speicher auf und beendet das Spiel
+         * Diese Funktion Räumt den Speicher auf.
+         * Wurde diese Funktion aufgerufen, musss neu Initialisiert werden @sa Initialize()
          */
         void Clean();
 
         //! Beendet den Mainloop
         /*!
-         * Setzt _Runnig auf false, wodurch die Hauptschleife beendet wird
+         * Sorgt dafür das @sa Run() angehalten wird
          */
         void Quit();
 
@@ -115,12 +127,16 @@ namespace MM {
         //! Gibt die Höhe des Fensters/Bildschirms zurück
         int GetWindowHeight();
 
+        //! Wechselt von/zu Vollbild
         bool SetFullscreen(bool fullscreen);
 
         //! Gibt den Defaultfont zurück
         Font* GetDefaultFont();
 
+        //! Gibt die standard Schriftgröße zurück
         int GetDefaultFontSize();
+
+
 
         Mullemaus(const Mullemaus &) = delete;
 

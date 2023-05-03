@@ -1,5 +1,5 @@
 /*
- * Mullemaus
+ * MM
  * Copyright (C) 2023   Frank Kartheuser <frank.kartheuser1988@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
@@ -53,7 +53,7 @@ MM::Mullemaus::Mullemaus() : pIsReady(false), pRunning(false), pAppName(), pAppD
 
 bool MM::Mullemaus::Initialize(const std::string &appName, int argc, char* argv[]) {
     if (pIsReady) {
-        LOG_FATAL("Mullemaus Engine already running!");
+        LOG_FATAL("MM Engine already running!");
         return false;
     }
     //Den Logger starten
@@ -62,8 +62,8 @@ bool MM::Mullemaus::Initialize(const std::string &appName, int argc, char* argv[
 
     //Namen der Anwendung setzen
     pAppName = appName;
-    LOG_INFO("Initialisiere Mullemaus Engine for {}", pAppName);
-    LOG_INFO("\n\t\tMullemaus version: {}\n\t\tbuild with Raylib version: {}", MULLEMAUS_VERSION_GIT, RAYLIB_VERSION);
+    LOG_INFO("Initialisiere MM Engine for {}", pAppName);
+    LOG_INFO("\n\t\tMM version: {}\n\t\tbuild with Raylib version: {}", MULLEMAUS_VERSION_GIT, RAYLIB_VERSION);
 
     //einige Raylib flags setzen
 #ifdef RAYLIB_LOG
@@ -233,10 +233,10 @@ int MM::Mullemaus::GetDefaultFontSize() {
 
 void MM::Mullemaus::Clean() {
     if (!pIsReady) {
-        LOG_FATAL("Can't clean up, Mullemaus is not initialized!");
+        LOG_FATAL("Can't clean up, MM is not initialized!");
         return;
     }
-    LOG_DEBUG("Clean up Mullemaus");
+    LOG_DEBUG("Clean up MM");
     pAppName.clear();
     pFontSize = 0;
     pIsReady = false;
@@ -270,7 +270,7 @@ void MM::Mullemaus::CmdLineParser(int argc, char **argv) {
     // Check that the arguments where valid:
     if (!result)
     {
-        LOG_FATAL ("Error in command line: {}", result.message());
+        LOG_FATAL ("Error in coMullemausand line: {}", result.message());
         std::cerr << cmd << std::endl;
         exit (1);
     }

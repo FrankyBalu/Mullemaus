@@ -1,5 +1,5 @@
 /*
- * Mullemaus
+ * MM
  * Copyright (C) 2023   Frank Kartheuser <frank.kartheuser1988@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
@@ -19,6 +19,9 @@
 #ifndef MULLEMAUS_LOG_HPP
 #define MULLEMAUS_LOG_HPP
 
+
+//FIXME CMAKE muss hier noch berücksichtigt werden
+
 #define SPDLOG_FMT_EXTERNAL
 #define SPDLOG_ACTIVE_LEVEL SPDLOG_LEVEL_TRACE
 
@@ -32,12 +35,9 @@
 #define NOGDI             // All GDI defines and routines
 #define NOUSER            // All USER defines and routines
 #define SPDLOG_USE_STD_FORMAT
-#include "spdlog/spdlog.h"
-#else
-
-#include <spdlog/spdlog.h>
-
 #endif
+
+#include "spdlog/spdlog.h"
 
 namespace MM {
 
@@ -46,23 +46,45 @@ namespace MM {
 
     void Logger_Shutdown();
 
+    void SetLogLevel(int level);
+
+/**
+ * Trace und Debug logging stehen im Release build  nicht zur verfügung
+ */
 #ifndef MULLEMAUS_RELEASE
+/**
+ * Sehr genaue Debugausgaben
+ */
 #define LOG_TRACE(...)    SPDLOG_TRACE(__VA_ARGS__)
+/**
+ * Norrmale Debugausgaben
+ */
 #define LOG_DEBUG(...)    SPDLOG_DEBUG(__VA_ARGS__)
-#define LOG_INFO(...)     SPDLOG_INFO(__VA_ARGS__)
-#define LOG_WARN(...)     SPDLOG_WARN(__VA_ARGS__)
-#define LOG_ERROR(...)    SPDLOG_ERROR(__VA_ARGS__)
-#define LOG_FATAL(...)    SPDLOG_CRITICAL(__VA_ARGS__)
-#define LOG_ASSERT(x, msg) if ((x)) {} else { LOG_FATAL("ASSERT - {}\n\t{}\n\tin file: {}\n\ton line: {}", #x, msg, __FILE__, __LINE__);}
 #else
-    // Disable logging for release builds
 #define LOG_TRACE (...)     (void)0
 #define LOG_DEBUG (...)	    (void)0
-#define LOG_INFO  (...)	    (void)0
-#define LOG_WARN  (...)	    (void)0
-#define LOG_ERROR (...)	    (void)0
-#define LOG_FATAL (...)	    (void)0
-#define LOG_ASSERT(x, msg)  (void)0
 #endif
+
+/**
+ * @brief Allgemeine Informationen. Werden beim Initialisieren von MM und wenn zum Beispiel Module dazu geladen werden ausgegeben.
+ * Für die Formatierung des Strings, siehe spdlog
+ */
+#define LOG_INFO(...)     SPDLOG_INFO(__VA_ARGS__)
+
+/**
+ * @brief Warnungen werden immer dann ausgegeben, wenn etwas nicht nach Plan läuft, aber das Programm ganz normal weiter Arbeiten kann.
+ */
+#define LOG_WARN(...)     SPDLOG_WARN(__VA_ARGS__)
+
+/**
+ * @brief Fehler, die nicht zum abbruch des Programms führen, aber den Programmfluss beeinflussen können.
+ */
+#define LOG_ERROR(...)    SPDLOG_ERROR(__VA_ARGS__)
+/**
+ * @brief Fehler, die so schwerwiegend sind, dass das Programm sofort beendet werden muss.
+ */
+#define LOG_FATAL(...)    SPDLOG_CRITICAL(__VA_ARGS__)
+
+#define LOG_ASSERT(x, msg) if ((x)) {} else { LOG_FATAL("ASSERT - {}\n\t{}\n\tin file: {}\n\ton line: {}", #x, msg, __FILE__, __LINE__);}
 } //namespace MM
 #endif //MULLEMAUS_LOG_HPP

@@ -6,13 +6,13 @@ SET(MULLEMAUS_CORE
         core/log.hpp
         core/mullemaus.hpp
         core/mullemaus.cpp
-        core/MullemausOverlay.cpp
-        core/MullemausOverlay.hpp
+        core/mullemausOverlay.cpp
+        core/mullemausOverlay.hpp
         core/gamepad.cpp
         core/gamepad.hpp
         core/keyboard.cpp
         core/keyboard.hpp
-        )
+        core/mullemaus_common.hpp)
 
 if (UNIX)
     add_library(mullemaus SHARED ${MULLEMAUS_CORE})

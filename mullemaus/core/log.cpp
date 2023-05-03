@@ -1,5 +1,5 @@
 /*
- * Mullemaus
+ * MM
  * Copyright (C) 2023   Frank Kartheuser <frank.kartheuser1988@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
@@ -50,4 +50,9 @@ void MM::Logger_Initialize() {
 
 void MM::Logger_Shutdown() {
     spdlog::shutdown();
+}
+
+
+void MM::SetLogLevel(int level) {
+    spdlog::set_level(static_cast<spdlog::level::level_enum>(level));
 }

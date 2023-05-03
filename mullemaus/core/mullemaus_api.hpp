@@ -1,5 +1,5 @@
 /*
- * Mullemaus
+ * MM
  * Copyright (C) 2023   Frank Kartheuser <frank.kartheuser1988@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
@@ -21,7 +21,7 @@
 #ifndef MULLEMAUS_API_HPP
 #define MULLEMAUS_API_HPP
 
-// Definitionen, falls Mullemaus unter windows als dll gebaut/genutzt werden soll
+// Definitionen, falls MM unter windows als dll gebaut/genutzt werden soll
 #ifdef _WIN32
     #ifdef BUILD_LIBTYPE_SHARED
         #define MULLEMAUS_API __declspec(dllexport)     // We are building the library as a Win32 shared library (.dll)
