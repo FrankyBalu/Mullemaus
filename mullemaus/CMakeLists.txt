@@ -24,7 +24,11 @@ SET(MULLEMAUS_CORE
         )
 
 if (UNIX)
-    add_library(mullemaus SHARED ${MULLEMAUS_CORE})
+    if (BUILD_MULLEMAUS_SHARED)
+        add_library(mullemaus SHARED ${MULLEMAUS_CORE})
+    else ()
+        add_library(mullemaus STATIC ${MULLEMAUS_CORE})
+    endif ()
 else ()
     set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
     add_library(mullemaus ${MULLEMAUS_CORE})

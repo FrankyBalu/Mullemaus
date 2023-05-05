@@ -10,7 +10,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 include(FeatureSummary)
 
-option(BUILD_SHARED_LIBS "Erstelle dynamische Bibliotheken" ON)
+option(BUILD_MULLEMAUS_SHARED "Erstelle dynamische Bibliotheken" ON)
 option(BUILD_DEMO_ERIK "Die Jump and Run Demo Erik bauen" ON)
 option(BUILD_DEMO_KLEINOD "Die RPG Demo Kleinod bauen" ON)
 
@@ -32,7 +32,7 @@ endif ()
 #                                                                                                                      #
 ########################################################################################################################
 IF (NOT CMAKE_BUILD_TYPE)
-    SET(CMAKE_BUILD_TYPE RelWithDebInfo CACHE STRING
+    SET(CMAKE_BUILD_TYPE Debug CACHE STRING
             "Wähle einen Build-Type, möglichkeiten sind: None(CMAKE_CXX_FLAGS oder CMAKE_C_FLAGS benutzen) Debug Release RelWithDebInfo MinSizeRel."
             FORCE)
     set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS None Debug Release RelWithDebInfo MinSizeRel)
@@ -77,42 +77,79 @@ add_feature_info("Doxygen" Doxygen_FOUND "Generate API doc mir make doc")
 #                                                                                                                      #
 ########################################################################################################################
 
-if (UNIX)
-    find_package(Lua 5.4 QUIET)
-    if (NOT Lua_FOUND)
-        message("lua nicht gefunden")
-    	add_subdirectory(extra/lua)
-    endif()
-    find_package(spdlog QUIET)
-    if (NOT spdlog_FOUND)
-    	add_subdirectory(extra/spdlog)
-    endif()
-    find_package(fmt 9.1 QUIET)
-
-    find_package(tinyxml2 QUIET)
-
-    #Sollte unter Linux immer vorhanden sein, glaub ich zumindest
-    find_package(ZLIB 1.2 QUIET)
-    if (NOT zlib_FOUND)
-    	add_subdirectory(extra/zlib)
-    endif()
-    find_package(PhysFS QUIET)
-    if (NOT PhysFS_FOUND)
-    	add_subdirectory(extra/physfs)
-    endif()
-
-    find_package(raylib QUIET)
-    if (NOT raylib_FOUND)
-    	add_subdirectory(extra/raylib)
-    endif()
-
-
-    add_feature_info("System lua" Lua_FOUND "")
-    add_feature_info("System zlib" ZLIB_FOUND "")
-    add_feature_info("System tinyxml2" tinyxml2_FOUND "")
-    add_feature_info("System spdlog" spdlog_FOUND "")
-    add_feature_info("System fmt" fmt_FOUND "")
+find_package(Lua 5.4 QUIET)
+if (NOT Lua_FOUND)
+    set(LUA_ENABLE_TESTING OFF)
+    if (UNIX)
+        set(LUA_ENABLE_SHARED OFF)
+    else ()
+        set(LUA_ENABLESHARED ON)
+    endif ()
+    add_subdirectory(extra/lua)
+    set(LUA_INCLUDE_DIR extra/lua/lua-5.4.4/include)
 endif ()
+
+find_package(spdlog QUIET)
+if (NOT spdlog_FOUND)
+    if (UNIX)
+        set(SPDLOG_BUILD_PIC ON)
+        set(SPDLOG_BUILD_SHARED OFF)
+    else ()
+        set(SPDLOG_BUILD_SHARED ON)
+    endif ()
+    add_subdirectory(extra/spdlog)
+    set(SPDLOG_INCLUDE_DIR extra/spdlog/include)
+endif ()
+
+find_package(PhysFS QUIET)
+if (NOT PhysFS_FOUND)
+    if (UNIX)
+        set (PHYSFS_BUILD_SHARED OFF)
+        set (PHYSFS_BUILD_STATIC ON)
+    else ()
+        set (PHYSFS_BUILD_SHARED OFF)
+        set (PHYSFS_BUILD_STATIC ON)
+    endif ()
+    add_subdirectory(extra/physfs)
+    set(PHYSFS_INCLUDE_DIR extra/physfs/src)
+endif ()
+
+find_package(raylib QUIET)
+if (NOT raylib_FOUND)
+    if (UNIX)
+        find_package(glfw QUIET)
+        if (glfw_FOUND)
+            set (USE_EXTERNAL_GLFW ON)
+        set (WITH_PIC ON)
+        set (BUILD_SHARED_LIBS OFF)
+    else ()
+        set (BUILD_SHARED_LIBS ON)
+        endif ()
+    endif ()
+    set (BUILD_EXAMPLES OFF)
+    add_subdirectory(extra/raylib)
+endif ()
+
+
+find_package(fmt 9.1 QUIET)
+
+find_package(tinyxml2 QUIET)
+
+#Sollte unter Linux immer vorhanden sein, glaub ich zumindest
+find_package(ZLIB 1.2 QUIET)
+if (NOT zlib_FOUND)
+    add_subdirectory(extra/zlib)
+endif ()
+
+
+
+
+
+add_feature_info("System lua" Lua_FOUND "")
+add_feature_info("System zlib" ZLIB_FOUND "")
+add_feature_info("System tinyxml2" tinyxml2_FOUND "")
+add_feature_info("System spdlog" spdlog_FOUND "")
+add_feature_info("System fmt" fmt_FOUND "")
 
 ########################################################################################################################
 #                                                                                                                      #
@@ -135,10 +172,9 @@ if (UNIX)
     )
 else ()
     include_directories(
-            "${PROJECT_SOURCE_DIR}/extra/lua-5.4.0/include"
-            "${PROJECT_SOURCE_DIR}/extra/physfs-3.2.0/include"
-            "${PROJECT_SOURCE_DIR}/extra/raylib-4.5.0/include"
-            "${PROJECT_SOURCE_DIR}/extra/zlib-1.2.13/"
+            "${PROJECT_SOURCE_DIR}/extra/physfs/include"
+            "${PROJECT_SOURCE_DIR}/extra/raylib/include"
+            "${PROJECT_SOURCE_DIR}/extra/zlib/"
             "${PROJECT_SOURCE_DIR}/extra/tinyxml2"
             "${PROJECT_SOURCE_DIR}/extra/sol"
             "${PROJECT_SOURCE_DIR}/extra/spdlog"
@@ -178,8 +214,12 @@ configure_file(${CMAKE_SOURCE_DIR}/mullemaus/core/globalConfig.hpp.in globalConf
 ########################################################################################################################
 add_subdirectory(extra)
 add_subdirectory(mullemaus)
+if (BUILD_DEMO_ERIK)
 add_subdirectory(erik)
+endif ()
+if (BUILD_DEMO_KLEINOD)
 add_subdirectory(kleinod)
+endif()
 add_subdirectory(data)
 
 message("  ")
