@@ -21,4 +21,4 @@ if (NOT DEFINED MULLEMAUS_VERSION_GIT)
     message(WARNING "Failed to determine MULLEMAUS_VERSION from Git tags. Using default version \"${MULLEMAUS_VERSION_GIT}\".")
 endif ()
 
-configure_file(${SRC}/mullemaus/core/mullemaus_version.h.in ${DST} @ONLY)
+configure_file(${SRC}/mullemaus/src/core/mullemaus_version.h.in ${DST} @ONLY)

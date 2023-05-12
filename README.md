@@ -1,29 +1,28 @@
+![ ](data/Logo.png)
+
 ﻿# MM
 
-Framework bzw. Engine zum erstellen von 2d Spielen in c++.
+Mullemaus ist eine Engine zum erstellen von 2D spielen.
 
-### Erik
 
-Jump and Run das als Demo für MM dient.
+### Demos
 
-### Kleinod
-
-RPG Demo für MM.
+Im zuge der Erstellung werden kleine Tutorial und Demos entstehen.
 
 ## Übersicht
 
-MM dient als Lernprojekt zum erstellen eines 2D-Spiels und der dazugehörenden Engine.
+Mullemaus dient als Lernprojekt zum erstellen eines 2D-Spiels und der dazugehörenden Engine.
 Es soll möglichst einfach ein Spiel, mit wenig C++ und etwas lua entwickelt werden können.
 
 # Bauanleitung
 
 ## Linux / BSD
 
-Es werden tinyxml2-dev, zlib-dev, lua-dev, physfs-dev und spdlog-dev zum bauen benötigt.
+Alle externen abhängigkeiten sind unter extra inegriert.
 
 ```
-git clone https://github.com/FrankyBalu/Erik.git
-cd Erik
+git clone https://github.com/FrankyBalu/Mullemaus.git
+cd Mullemaus
 mkdir build
 cd build
 cmake ..
@@ -35,7 +34,7 @@ sudo make install
 ## Windows
 
 Es sollte mit jeder IDE gehen, die CMake unterstützt.
-![ ](data/Logo.png)
+
 
 # Roadmap
 
@@ -43,17 +42,16 @@ Es sollte mit jeder IDE gehen, die CMake unterstützt.
 
 - [X] [Logging Klasse]
 - [X] [Fenstererstellen]
-- [X] [Schrift im Fenster darstellen]
-- [X] [Eingabe möglichkeiten]
-- [X] [Engine Objekte, um jeden Teil der Engine verfolgen zu können]
-
+- [ ] [Schrift im Fenster darstellen]
+- [ ] [Eingabe möglichkeiten]
+- [ ] [Engine Objekte, um jeden Teil der Engine verfolgen zu können]
+- [ ] [Renderer]
+- [ ] [Texturen + Texturemanager]
 ## Version 0.0.2
 
-- [ ] [Renderer]
-- [ ] [Texturen]
 - [ ] [Sprites]
 - [ ] [Einstellungen mit lua laden]
-- [ ] [Menüs mit lua erstellen]
+- [ ] [GUI mit lua erstellen]
 
 ## Version 0.0.3
 

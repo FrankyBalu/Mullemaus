@@ -1,60 +1,69 @@
 project(mullemaus)
 
 # Local source files here
-SET(MULLEMAUS_CORE
-        core/log.cpp
-        core/log.hpp
-        core/mullemaus.hpp
-        core/mullemaus_raylib.cpp
-        core/overlaytext_raylib.cpp
-        core/overlaytext.hpp
-        core/gamepad_raylib.cpp
-        core/gamepad.hpp
-        core/keyboard_raylib.cpp
-        core/keyboard.hpp
-        core/mullemaus_common.hpp
-        core/basicobject.hpp
-        core/rect2d.cpp
-        core/rect2d.hpp
-        core/overlaytextmanager.cpp
-        core/overlaytextmanager.hpp
-        core/objectfactory.cpp
-        core/objectfactory.hpp
+set(MULLEMAUS_CORE
+        src/core/log.cpp
+        include/mullemaus/core/log.hpp
+        #include/core/mullemaus.hpp
+        #src/core/mullemaus_raylib.cpp
+        #src/core/overlaytext_raylib.cpp
+        #include/core/overlaytext.hpp
+        #src/core/gamepad_raylib.cpp
+        #include/core/gamepad.hpp
+        #src/core/keyboard_raylib.cpp
+        #include/core/keyboard.hpp
+        #include/core/mullemaus_common.hpp
+        #include/core/basicobject.hpp
+        #src/core/rect2d.cpp
+        #include/core/rect2d.hpp
+        #src/core/overlaytextmanager.cpp
+        #include/core/overlaytextmanager.hpp
+        #src/core/objectfactory.cpp
+        #include/core/objectfactory.hpp
+        include/mullemaus/core/filesystem.hpp
+        src/core/filesystem.cpp
+        #src/core/texture2d.cpp
+        #include/core/texture2d.hpp
 
-        )
+        #include/core/font.hpp src/core/font.cpp
+        src/core/window.cpp
+        include/mullemaus/core/window.hpp include/mullemaus/core/Utils.hpp)
 
 if (UNIX)
     if (BUILD_MULLEMAUS_SHARED)
-        add_library(mullemaus SHARED ${MULLEMAUS_CORE})
-    else ()
-        add_library(mullemaus STATIC ${MULLEMAUS_CORE})
+        add_library(mullemaus_shared SHARED ${MULLEMAUS_CORE})
     endif ()
-else ()
-    set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
-    add_library(mullemaus ${MULLEMAUS_CORE})
+    if (BUILD_MULLEMAUS_STATIC)
+        add_library(mullemaus_static STATIC ${MULLEMAUS_CORE})
+    endif ()
+elseif (WIN32)
+    if (BUILD_MULLEMAUS_SHARED)
+        set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+        add_library(mullemaus_shared ${MULLEMAUS_CORE})
+    endif ()
+    if (BUILD_MULLEMAUS_STATIC)
+        add_library(mullemaus_static STATIC ${MULLEMAUS_CORE})
+    endif ()
 endif ()
 
-add_dependencies(mullemaus version)
+add_dependencies(mullemaus_shared version)
+#add_dependencies(mullemaus_static version)
 
 if (UNIX)
-    target_link_libraries(mullemaus ${LUA_LIBRARY}
+    target_link_libraries(mullemaus_shared
             raylib
-            tinyxml2
-            z
             physfs
             spdlog
-            fmt
             )
 else ()
-    target_link_libraries(mullemaus lua54.lib
+    target_link_libraries(mullemaus_shared
             raylibdll.lib
-            libz.lib
             physfs.lib
             )
 endif ()
 
 if (UNIX)
-    install(TARGETS mullemaus
+    install(TARGETS mullemaus_shared
             EXPORT mullemaus
             LIBRARY DESTINATION lib
             ARCHIVE DESTINATION lib

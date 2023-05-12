@@ -31,4 +31,7 @@
 #visual studio
 .vs
 out
-CMakeSettings.json
+CMakeSettings.jsoncmake-build-debug/
+cmake-build-release/
+cmake-build-relwithdebinfo/
+cmake-build-debug/
