@@ -17,8 +17,26 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#ifndef MULLEMAUS_MULLEMAUS_COMMON_HPP
-#define MULLEMAUS_MULLEMAUS_COMMON_HPP
+#ifndef MULLEMAUS_RENDERER_HPP
+#define MULLEMAUS_RENDERER_HPP
 
+#include "../core/mullemaus_api.hpp"
+#include "color.hpp"
 
-#endif //MULLEMAUS_MULLEMAUS_COMMON_HPP
+namespace MM {
+    extern "C" {
+
+    MULLEMAUS_API class Renderer {
+    public:
+        Renderer();
+        static void BeginDrawing();
+        static void EndDrawing();
+
+        static void DrawRect (int left, int up, int width, int height, const Color col);
+        static void DrawLine (int startPosX, int startPosY, int endPosX, int endPosY, const Color color);
+
+    };
+    }//extern C
+}//namespace MM
+
+#endif //MULLEMAUS_RENDERER_HPP

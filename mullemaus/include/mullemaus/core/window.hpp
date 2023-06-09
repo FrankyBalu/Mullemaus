@@ -21,8 +21,10 @@
 #ifndef MULLEMAUS_WINDOW_HPP
 #define MULLEMAUS_WINDOW_HPP
 
-#include "mullemaus_api.hpp"
 #include <string>
+
+#include "mullemaus_api.hpp"
+#include "../include/mullemaus/render/color.hpp"
 
 namespace MM {
 
@@ -92,7 +94,7 @@ namespace MM {
         // static void SetPosition(int x, int y);
         // static void SetPosition(int x, int y);
 
-        static void ClearBackground (int r, int g, int b, int a);
+        static void ClearBackground (MM::Color color);
         static void BeginDrawing();
         static void EndDrawing();
 

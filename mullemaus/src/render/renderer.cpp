@@ -17,8 +17,26 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#ifndef MULLEMAUS_MULLEMAUS_COMMON_HPP
-#define MULLEMAUS_MULLEMAUS_COMMON_HPP
+#include "../../include/mullemaus/render/renderer.hpp"
+#include <raylib.h>
+#include "../../include/mullemaus/core/log.hpp"
 
+MM::Renderer::Renderer() {
 
-#endif //MULLEMAUS_MULLEMAUS_COMMON_HPP
+}
+
+void MM::Renderer::BeginDrawing() {
+    ::BeginDrawing();
+}
+
+void MM::Renderer::EndDrawing() {
+    ::EndDrawing();
+}
+
+void MM::Renderer::DrawRect(int left, int up, int width, int height, MM::Color col) {
+    ::DrawRectangle(left, up, width, height, {col.r, col.g, col.b,col.a});
+}
+
+void MM::Renderer::DrawLine(int startPosX, int startPosY, int endPosX, int endPosY, const MM::Color color) {
+    ::DrawLine(startPosX, startPosY, endPosX, endPosY, {color.r, color.g, color.b, color.a});
+}

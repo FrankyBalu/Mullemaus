@@ -24,10 +24,14 @@ set(MULLEMAUS_CORE
         src/core/filesystem.cpp
         #src/core/texture2d.cpp
         #include/core/texture2d.hpp
-
         #include/core/font.hpp src/core/font.cpp
         src/core/window.cpp
-        include/mullemaus/core/window.hpp include/mullemaus/core/Utils.hpp)
+        include/mullemaus/core/window.hpp
+        include/mullemaus/core/Utils.hpp
+        include/mullemaus/render/renderer.hpp
+        include/mullemaus/render/color.hpp
+        src/render/color.cpp
+        src/render/renderer.cpp)
 
 if (UNIX)
     if (BUILD_MULLEMAUS_SHARED)

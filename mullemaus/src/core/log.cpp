@@ -1,5 +1,5 @@
 /*
- * MM
+ * Mullemaus
  * Copyright (C) 2023   Frank Kartheuser <frank.kartheuser1988@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
@@ -25,14 +25,14 @@
 #define NOUSER            // All USER defines and routines
 #endif
 
-#include <mullemaus/core/log.hpp>
+
 
 #include <spdlog/sinks/stdout_color_sinks.h>
 
 #include <memory>
 #include <spdlog/common.h>
 #include <spdlog/spdlog.h>
-
+#include <mullemaus/core/log.hpp>
 [[maybe_unused]] void MM::Logger_Initialize() {
     auto consoleSink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
     consoleSink->set_pattern("%^[%H:%M:%S.%e]%=8l:(%s:%#)  %v%$");

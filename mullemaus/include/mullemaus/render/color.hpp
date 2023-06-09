@@ -17,8 +17,35 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#ifndef MULLEMAUS_MULLEMAUS_COMMON_HPP
-#define MULLEMAUS_MULLEMAUS_COMMON_HPP
+#ifndef MULLEMAUS_COLOR_HPP
+#define MULLEMAUS_COLOR_HPP
 
 
-#endif //MULLEMAUS_MULLEMAUS_COMMON_HPP
+#include "../core/mullemaus_api.hpp"
+
+namespace MM {
+    extern "C" {
+
+    MULLEMAUS_API class Color {
+    public:
+        unsigned char r; //!< Rot-Wert
+        unsigned char g; //!< Grün-Wert
+        unsigned char b; //!< Blau-Wert
+        unsigned char a; //!< Alpha-Wert
+
+        Color();
+
+        Color(unsigned char red, unsigned char green, unsigned char blue, unsigned char alpha);
+
+       // Color(Color &color);
+
+        void Fade(float Alpha);
+
+        int ToInt();
+
+        void Tint(Color Tint);
+
+    };
+    }//extern C
+}//namespac
+#endif //MULLEMAUS_COLOR_HPP

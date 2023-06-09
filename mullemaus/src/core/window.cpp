@@ -1,5 +1,5 @@
 /*
- * MM
+ * Mullemaus
  * Copyright (C) 2023   Frank Kartheuser <frank.kartheuser1988@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
@@ -20,6 +20,7 @@
 
 #include "../../include/mullemaus/core/window.hpp"
 #include "../../include/mullemaus/core/log.hpp"
+#include "mullemaus/render/color.hpp"
 #include <raylib.h>
 
 
@@ -187,8 +188,8 @@ std::string MM::Window::GetMonitorName(int monitor) {
     return ::GetMonitorName(monitor);
 }
 
-void MM::Window::ClearBackground(int r, int g, int b, int a) {
-    ::ClearBackground({r,g,b,a});
+void MM::Window::ClearBackground(MM::Color color) {
+    ::ClearBackground({color.r,color.g,color.b,color.a});
 }
 
 void MM::Window::BeginDrawing() {

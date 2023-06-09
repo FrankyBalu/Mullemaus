@@ -1,5 +1,5 @@
 /*
- * MM
+ * Mullemaus
  * Copyright (C) 2023   Frank Kartheuser <frank.kartheuser1988@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
